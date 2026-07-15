@@ -1,0 +1,22 @@
+﻿@model IEnumerable<DAShopTech.Models.Product>
+
+<h2>Kết quả tìm kiếm cho: @ViewData["SearchTerm"]</h2>
+
+@if (!Model.Any())
+{
+    <p>Không tìm thấy sản phẩm nào.</p>
+}
+else
+{
+    <div class="products">
+        @foreach (var product in Model)
+        {
+            <div class="product">
+                <h3>@product.ProductName</h3>
+                <p>@product.Description</p>
+                <p>Giá: @product.Price VND</p>
+                <a asp-controller="Product" asp-action="Details" asp-route-id="@product.ProductId">Xem chi tiết</a>
+            </div>
+        }
+    </div>
+}

@@ -1,0 +1,55 @@
+﻿@model DAShopTech.Models.Order
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-wrapper">
+    <div class="card">
+        <h5 class="card-header">Chi Tiết Đơn Hàng</h5>
+        <div class="table-responsive text-nowrap">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Tên Khách Hàng</th>
+                        <th>Ngày Lên Đơn</th>
+                        <th>Giá Trị Đơn Hàng</th>
+                        <th>Trạng Thái</th>
+                        <th>Địa Chỉ Giao Hàng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@Model.Customer?.FullName</td>
+                        <td>@Model.OrderDate.ToString("dd/MM/yyyy")</td>
+                        <td>@Model.TotalAmount.ToString("C")</td>
+                        <td>@Model.Status</td>
+                        <td>@Model.ShippingAddress</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h5 class="card-header">Chi Tiết Sản Phẩm</h5>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Tên Sản Phẩm</th>
+                        <th>Số Lượng</th>
+                        <th>Giá Đơn Vị</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.OrderDetails)
+                    {
+                        <tr>
+                            <td>@item.Product?.ProductName</td>
+                            <td>@item.Quantity</td>
+                            <td>@item.UnitPrice.ToString("C")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <a asp-action="Orders" class="btn btn-info">Quay lại</a>
+    </div>
+</div>

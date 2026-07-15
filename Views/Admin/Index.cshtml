@@ -1,0 +1,235 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="content-wrapper">
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="row">
+        
+            <!-- Thống Kê Đơn Hàng -->
+            <div class="col-md-6 col-lg-4 col-xl-4 order-0 mb-6">
+                <div class="card h-100">
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="card-title mb-0">
+                            <h5 class="mb-1 me-2">Thống kê đơn hàng</h5>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="get" asp-action="Index">
+                            <div class="mb-3">
+                                <label for="datePicker" class="form-label">Chọn Ngày</label>
+                                <input type="date" id="datePicker" name="selectedDate" class="form-control" value="@Model.SelectedDate.ToString("yyyy-MM-dd")">
+                            </div>
+                            <div class="mb-3">
+                                <label for="statusSelector" class="form-label">Chọn Trạng Thái</label>
+                                <select id="statusSelector" name="status" class="form-select">
+                                    <option value="">Tất cả</option> 
+                                    <option value="Đã Xác Nhận" selected="@(Model.Status == "Đã Xác Nhận" ? "selected" : null)">Mới</option>
+                                    <option value="Đã Hủy" selected="@(Model.Status == "Đã Hủy" ? "selected" : null)">Đã Huỷ</option>
+                                    <option value="Đang Giao" selected="@(Model.Status == "Đang Giao" ? "selected" : null)">Đang Giao</option>
+                                    <option value="Thành Công" selected="@(Model.Status == "Thành Công" ? "selected" : null)">Thành Công</option>
+                                    <option value="Chờ Xác Nhận" selected="@(Model.Status == "Chờ Xác Nhận" ? "selected" : null)">Chờ Xác Nhận</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Xem</button>
+                        </form>
+                        <div class="d-flex justify-content-between align-items-center mb-6">
+                            <div class="d-flex flex-column align-items-center gap-1">
+                                <h3 class="mb-1">Sô đơn hàng: @Model.TotalOrders</h3> 
+                            </div>
+                        </div>
+                        <ul class="p-0 m-0">
+                            @foreach (var order in Model.Orders)
+                            {
+                                <li class="d-flex align-items-center mb-5">
+                                    <div class="avatar flex-shrink-0 me-3">
+                                        <span class="avatar-initial rounded bg-label-primary">
+                                            <i class="bx bx-mobile-alt"></i>
+                                        </span>
+                                    </div>
+                                    <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                        <div class="me-2">
+                                            <h6 class="mb-0">Mã đơn hàng: @order.OrderId</h6>
+                                            <small>Trạng thái: @order.Status</small>
+                                        </div>
+                                        <div class="user-progress">
+                                            <h6 class="mb-0">Giá: @order.TotalAmount.ToString("C")</h6>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--/ Thống Kê Đơn Hàng --> 
+
+            <!-- Doanh Thu -->
+            <div class="col-md-6 col-lg-4 col-xl-4 order-0 mb-6">
+                <div class="card h-100">
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="card-title mb-0">
+                            <h5 class="mb-1 me-2">Doanh Thu Bán Hàng</h5>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn text-muted p-0"
+                                    type="button"
+                                    id="revenueStatistics"
+                                    data-bs-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false">
+                                <i class="bx bx-dots-vertical-rounded bx-lg"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="get" asp-action="Index">
+                            <div class="mb-3">
+                                <label for="datePickerRevenue" class="form-label">Chọn Ngày</label>
+                                <input type="date" id="datePickerRevenue" name="selectedDate" class="form-control" value="@Model.SelectedDate.ToString("yyyy-MM-dd")">
+                            </div>
+                            <div class="mb-3">
+                                <label for="yearSelectorRevenue" class="form-label">Chọn Năm</label>
+                                <select id="yearSelectorRevenue" name="selectedYear" class="form-select">
+                                    @for (var year = DateTime.Today.Year - 5; year <= DateTime.Today.Year + 100; year++)
+                                    {
+                                        <option value="@year" selected="@(year == Model.SelectedDate.Year ? "selected" : null)">@year</option>
+                                    }
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Xem</button>
+                        </form>
+                        <div class="d-flex justify-content-between align-items-center mb-6">
+                            <div class="d-flex flex-column align-items-center gap-1">
+                                <h3 class="mb-1">Số tiền: @Model.TotalRevenue.ToString("C")</h3> 
+                            </div>
+                        </div>
+                        <ul class="p-0 m-0">
+                            @foreach (var revenue in Model.RevenueDetails)
+                            {
+                                <li class="d-flex align-items-center mb-5">
+                                    <div class="avatar flex-shrink-0 me-3">
+                                        <span class="avatar-initial rounded bg-label-primary">
+                                            <i class="bx bx-dollar"></i>
+                                        </span>
+                                    </div>
+                                    <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                        <div class="me-2">
+                                            <h6 class="mb-0">Mã đơn hàng: @revenue.OrderId</h6>
+                                            <small>Trạng thái: @revenue.Status</small>
+                                        </div>
+                                        <div class="user-progress">
+                                            <h6 class="mb-0">Doanh thu: @revenue.Amount.ToString("C")</h6>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--/ Doanh Thu -->
+        </div>
+    </div>
+
+    <div class="content-backdrop fade"></div>
+</div>
+
+<!-- Include Chart.js if needed for charts -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Xử lý dropdown
+        document.querySelectorAll('.dropdown-item').forEach(function(item) {
+            item.addEventListener('click', function(event) {
+                event.preventDefault(); // Ngăn chặn hành vi mặc định của liên kết
+                
+                // Lấy giá trị trạng thái từ thuộc tính data-status
+                var status = this.getAttribute('data-status');
+                
+                // Cập nhật URL với tham số trạng thái
+                var url = new URL(window.location.href);
+                url.searchParams.set('status', status); // Cập nhật tham số trạng thái
+                window.location.href = url.toString(); // Chuyển hướng đến URL mới
+            });
+        });
+
+        // Doanh thu theo ngày
+        var ctxDay = document.getElementById('orderStatisticsChart');
+        if (ctxDay) {
+            ctxDay = ctxDay.getContext('2d');
+            new Chart(ctxDay, {
+                type: 'bar',
+                data: {
+                    labels: ['Tổng Đơn Hàng'],
+                    datasets: [{
+                        label: 'Số Đơn Hàng',
+                        data: [@Model.TotalOrders],
+                        backgroundColor: '#42A5F5'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Doanh thu theo tháng
+        var ctxMonth = document.getElementById('monthlyRevenueChart');
+        if (ctxMonth) {
+            ctxMonth = ctxMonth.getContext('2d');
+            var monthlyData = @Html.Raw(Json.Serialize(Model.MonthlyRevenue)); // Dữ liệu doanh thu theo tháng
+            new Chart(ctxMonth, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        label: 'Doanh Thu Theo Tháng',
+                        data: monthlyData,
+                        backgroundColor: '#42A5F5',
+                        borderColor: '#1E88E5',
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Doanh thu theo năm
+        var ctxYear = document.getElementById('yearlyRevenueChart');
+        if (ctxYear) {
+            ctxYear = ctxYear.getContext('2d');
+            var yearlyData = @Html.Raw(Json.Serialize(Model.YearlyRevenue)); // Dữ liệu doanh thu theo năm
+            new Chart(ctxYear, {
+                type: 'bar',
+                data: {
+                    labels: ['2023', '2024'], // Tùy chỉnh theo năm bạn có dữ liệu
+                    datasets: [{
+                        label: 'Doanh Thu Theo Năm',
+                        data: yearlyData,
+                        backgroundColor: '#42A5F5'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    });
+</script>

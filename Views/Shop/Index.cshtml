@@ -1,0 +1,81 @@
+﻿@model DAShopTech.Models.ShopViewModel
+
+<main class="main">
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">TRANG CHỦ</a></li>
+                <li class="breadcrumb-item"><a href="#">SẢN PHẨM</a></li>
+            </ol>
+        </div>
+    </nav>
+
+    <div class="page-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9">
+                    <!-- Kiểm tra nếu không có sản phẩm -->
+                    @if (!Model.Products.Any())
+                    {
+                        <p class="text-center">Không có sản phẩm nào trong danh mục này.</p>
+                    }
+                    else
+                    {
+                        <!-- Hiển thị danh sách sản phẩm -->
+                        <div class="products mb-4">
+                            <div class="row justify-content-center">
+                                @foreach (var item in Model.Products)
+                                {
+                                    <div class="col-3">
+                                        <div class="product product-7 text-center">
+                                            <a asp-controller="Shop" asp-action="ProductDetail" asp-route-id="@item.ProductId" class="btn btn-sm text-dark p-0">
+                                                <figure class="product-media">
+                                                    <img src="@item.ImageUrl" alt="Product image" class="product-image">
+                                                </figure>
+                                            </a>
+                                            <div class="product-body">
+                                                <h3 class="product-title">@item.ProductName</h3>
+                                                <div class="product-price">
+                                                    @item.Price.ToString("C", new System.Globalization.CultureInfo("vi-VN"))
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <!-- Hiển thị danh sách Categories -->
+                <aside class="col-lg-3 order-lg-first">
+                    <div class="sidebar sidebar-shop">
+                        <div class="widget widget-clean">
+                            <label>Lọc Sản Phẩm Theo Danh Mục:</label>
+                        </div>
+
+                        <div class="widget widget-collapsible">
+                            <h3 class="widget-title">
+                                <a data-toggle="collapse" href="#widget-1" role="button" aria-expanded="true" aria-controls="widget-1">
+                                    Danh Mục
+                                </a>
+                            </h3>
+                            <div class="collapse show" id="widget-1">
+                                <div class="widget-body">
+                                    <ul class="filter-items">
+                                        @foreach (var category in Model.Categories)
+                                        {
+                                            <li class="filter-item">
+                                                <a href="@Url.Action("Index", "Shop", new { categoryId = category.CategoryId })">@category.CategoryName</a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+</main>

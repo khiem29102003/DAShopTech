@@ -1,0 +1,461 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- molla/index-1.html  22 Nov 2019 09:55:06 GMT -->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewData["Title"]SHOPTECH QA</title>
+    <meta name="keywords" content="HTML5 Template">
+    <meta name="description" content="Molla - Bootstrap eCommerce Template">
+    <meta name="author" content="p-themes">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="~/assets/images/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/assets/images/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/assets/images/icons/favicon-16x16.png">
+    <link rel="manifest" href="~/assets/images/icons/site.html">
+    <link rel="mask-icon" href="~/assets/images/icons/safari-pinned-tab.svg" color="#666666">
+    <link rel="shortcut icon" href="~/assets/images/icons/favicon.ico">
+    <meta name="apple-mobile-web-app-title" content="Molla">
+    <meta name="application-name" content="Molla">
+    <meta name="msapplication-TileColor" content="#cc9966">
+    <meta name="msapplication-config" content="~/assets/images/icons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="~/assets/vendor/line-awesome/line-awesome/line-awesome/css/line-awesome.min.css">
+    <!-- Plugins CSS File -->
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/assets/css/plugins/owl-carousel/owl.carousel.css">
+    <link rel="stylesheet" href="~/assets/css/plugins/magnific-popup/magnific-popup.css">
+    <link rel="stylesheet" href="~/assets/css/plugins/jquery.countdown.css">
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="~/assets/css/style.css">
+    <link rel="stylesheet" href="~/assets/css/skins/skin-demo-2.css">
+    <link rel="stylesheet" href="~/assets/css/demos/demo-2.css">
+    @RenderSection("Styles", required: false)
+    <style>
+        /* Basic styling for the header and navigation */
+        header {
+            background-color: #f8f9fa;
+            padding: 10px 20px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        } 
+
+        /* Styling for the account section */
+        .account {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            display: inline-block;
+            font-family: 'Poppins', sans-serif; /* Chọn phông chữ hiện đại */
+            font-size: 32px; /* Kích thước chữ */
+            font-weight: bold;
+            text-transform: uppercase; /* Chữ in hoa */
+            text-decoration: none; /* Bỏ gạch chân */
+            background: linear-gradient(90deg, #ff8a00, #e52e71); /* Hiệu ứng gradient */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; /* Gradient màu trên chữ */
+            transition: all 0.3s ease; /* Hiệu ứng chuyển đổi khi hover */
+        }
+ 
+        .suggestions-dropdown {
+            position: absolute;
+            background: white;
+            border: 1px solid #ccc;
+            max-height: 150px;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+            .suggestions-dropdown div {
+                padding: 8px;
+                cursor: pointer;
+            }
+
+                .suggestions-dropdown div:hover {
+                    background: #f0f0f0;
+                }
+
+        
+            .logo:hover {
+                background: linear-gradient(90deg, #e52e71, #ff8a00); /* Đổi hướng gradient khi hover */
+                transform: scale(1.1); /* Tăng kích thước một chút khi hover */
+            }
+
+        .account-info {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        } 
+        .account-link,
+        .logout-link,
+        .login-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #333;
+            margin-left: 10px;
+        }
+
+            .account-link:hover,
+            .logout-link:hover,
+            .login-link:hover {
+                color: #007bff;
+            }
+
+        .icon {
+            font-size: 20px;
+            margin-right: 5px;
+        }
+
+        p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        /* Styling for the logout link to make it distinct */
+        .logout-link {
+            border-left: 1px solid #ddd;
+            padding-left: 10px;
+        } 
+    </style>
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <!--header -->
+  
+        <header class="header header-2 header-intro-clearance"> 
+            <div class="header-middle">
+                <div class="container">
+                    <div class="header-left">
+                        <button class="mobile-menu-toggler">
+                            <span class="sr-only">Toggle mobile menu</span>
+                            <i class="icon-bars"></i>
+                        </button>
+
+                        <a asp-controller="Home" asp-action="Index" class="logo">
+                            SHOPTECH QA
+                        </a>
+                    </div><!-- End .header-left --> 
+                    <div class="header-center">
+                        <div class="header-search header-search-extended header-search-visible header-search-no-radius d-none d-lg-block">
+                            <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
+                            <form id="searchForm" method="get">
+                                <div class="header-search-wrapper search-wrapper-wide">
+                                    <label for="searchInput" class="sr-only">Search</label>
+                                    <input type="search" class="form-control" id="searchInput" placeholder="TÌM KIẾM SẢN PHẨM" required>
+                                    <div id="suggestions" class="suggestions-dropdown" style="display:none;"></div>
+                                    <button type="button" id="searchButton" class="btn btn-primary"><i class="icon-search"></i></button>
+                                </div>
+                            </form>
+
+
+
+
+                        </div><!-- End .header-search -->
+                    </div>
+
+                    <div class="header-right">
+                        <div class="account">
+                            @if (ViewBag.Username != null)
+                            {
+                                <!-- Nếu người dùng đã đăng nhập -->
+                                <div class="account-info">
+                                    <a href="#" title="My account" class="account-link">
+                                        <div class="icon">
+                                            <i class="icon-user"></i>
+                                        </div>
+                                        <p>@ViewBag.Username</p>
+                                    </a>
+                                    <a asp-controller="Account" asp-action="Logout" title="Logout" class="logout-link">
+                                        <div class="icon">
+                                            <i class="icon-logout"></i>
+                                        </div>
+                                        <p>Đăng xuất</p>
+                                    </a> 
+                                </div>
+                            }
+                            else
+                            {
+                                <!-- Nếu người dùng chưa đăng nhập -->
+                                <a asp-controller="Account" asp-action="Login" title="Login" class="login-link">
+                                    <div class="icon">
+                                        <i class="icon-user"></i>
+                                    </div>
+                                    <p>Đăng nhập</p>
+                                </a>
+                                <a asp-controller="Account" asp-action="Register" title="Login" class="login-link">
+                                    <div class="icon">
+                                        <i class="icon-user"></i>
+                                    </div>
+                                    <p>Đăng ký</p>
+                                </a> 
+                            }
+                        </div>
+                        <div class="dropdown cart-dropdown">
+                            <a asp-controller="Cart" asp-action="Index" class="dropdown-toggle" role="button"  >
+                                <div class="icon">
+                                    <i class="icon-shopping-cart"></i>
+                                    <span class="cart-count">@Model</span>
+                                </div>
+                                <p>GIỎ HÀNG</p>
+                            </a>
+                        </div><!-- End .cart-dropdown -->
+                    </div><!-- End .header-right -->
+                </div><!-- End .container -->
+            </div><!-- End .header-middle --> 
+            <div class="header-bottom sticky-header">
+                <div class="container">
+                    <div class="header-center">
+                        <nav class="main-nav">
+                            <ul class="menu sf-arrows">
+                                <!--TRANG CHỦ-->
+                                <li class="megamenu-container active">
+                                    <a asp-controller="Home" asp-action="Index">TRANG CHỦ</a>
+                                </li>
+                                <!--TRANG CHỦ-->
+                                <!--SẢN PHẨM-->
+                                <li>
+                                <a asp-controller="Shop" asp-action="Index">SẢN PHẨM </a>
+                                </li>
+                                <!--SẢN PHẨM-->
+                                <!--THÔNG TIN-->
+                                <li>
+                                    <a href="#">THÔNG TIN</a>
+                                </li>
+                                <!--THÔNG TIN-->
+                                <!--LIÊN HỆ-->
+                                <li>
+                                    <a href="elements-list.html">LIÊN HỆ</a>
+                                </li>
+                                <!--LIÊN HỆ-->
+                            </ul><!-- End .menu -->
+                        </nav><!-- End .main-nav -->
+                    </div><!-- End .header-center -->
+                </div><!-- End .container -->
+            </div><!-- End .header-bottom -->
+        </header>
+        @{
+            var message = ViewBag.Message as string;
+        }
+
+        @if (!string.IsNullOrEmpty(message))
+        {
+            <div id="alert-message" class="alert alert-success">
+                @message
+            </div>
+        }
+        <!-- End .header --> 
+        @RenderBody()
+        @RenderSection("Scripts", required: false)
+        <footer class="footer footer-2">
+            <div class="footer-newsletter bg-image" style="background-image: url(~/assets/images/backgrounds/bg-2.jpg)">
+                <div class="container">
+                    <div class="heading text-center">
+                        <h3 class="title">NHẬN ƯU ĐÃI MỚI NHẤT</h3><!-- End .title -->
+                        <p class="title-desc">VỚI PHIẾU GIẢM GIÁ <span>10%</span> VỚI LẦN MUA ĐẦU TIÊN</p><!-- End .title-desc -->
+                    </div><!-- End .heading -->
+
+                    <div class="row">
+                        <div class="col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+                            <form action="#">
+                                <div class="input-group">
+                                    <input type="email" class="form-control" placeholder="NHẬP ĐỊA CHỈ EAMAIL CỦA BẠN" aria-label="Email Adress" aria-describedby="newsletter-btn" required>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="submit" id="newsletter-btn"><span>ĐĂNG KÝ</span><i class="icon-long-arrow-right"></i></button>
+                                    </div><!-- .End .input-group-append -->
+                                </div><!-- .End .input-group -->
+                            </form>
+                        </div><!-- End .col-sm-10 offset-sm-1 col-lg-6 offset-lg-3 -->
+                    </div><!-- End .row -->
+                </div><!-- End .container -->
+            </div><!-- End .footer-newsletter bg-image -->
+
+            <div class="footer-middle">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-6">
+                            <div class="widget widget-about">
+                                <img src="~/assets/images/demos/demo-2/logo.png" class="footer-logo" alt="Footer Logo" width="105" height="25">
+
+                                <div class="widget-about-info">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-md-4">
+                                            <span class="widget-about-title">Hỗ Trợ Trực Tuyến 24/7</span>
+                                            <a href="tel:123456789">+0123 456 789</a>
+                                        </div><!-- End .col-sm-6 -->
+                                        <div class="col-sm-6 col-md-8">
+                                            <span class="widget-about-title">Phương thức thanh toán</span>
+                                            <figure class="footer-payments">
+                                                <img src="~/assets/images/payments.png" alt="Payment methods" width="272" height="20">
+                                            </figure><!-- End .footer-payments -->
+                                        </div><!-- End .col-sm-6 -->
+                                    </div><!-- End .row -->
+                                </div><!-- End .widget-about-info -->
+                            </div><!-- End .widget about-widget -->
+                        </div><!-- End .col-sm-12 col-lg-3 -->
+
+                        <div class="col-sm-4 col-lg-2">
+                            <div class="widget">
+                                <h4 class="widget-title">Information</h4><!-- End .widget-title -->
+
+                                <ul class="widget-list">
+                                    <li><a asp-controller="Home" asp-action="Index">TRANG CHỦ</a></li>
+                                    <li><a asp-controller="Shop" asp-action="Index">SẢN PHẨM</a></li>
+                                    <li><a asp-controller="About" asp-action="Index">THÔN TIN</a></li>
+                                    <li><a asp-controller="Support" asp-action="Index">HỖ TRỢ</a></li>
+                                    <li><a asp-controller="Contact" asp-action="Index">LIÊN HỆ</a></li>
+                                </ul><!-- End .widget-list -->
+                            </div><!-- End .widget -->
+                        </div><!-- End .col-sm-4 col-lg-3 -->
+                    </div><!-- End .row -->
+                </div><!-- End .container -->
+            </div><!-- End .footer-middle -->
+
+            <div class="footer-bottom">
+                <div class="container">
+                    <p class="footer-copyright">Copyright © 2024 Henry Tran. All Rights Reserved.</p><!-- End .footer-copyright -->
+
+                    <div class="social-icons social-icons-color">
+                        <span class="social-label">Social Media</span>
+                        <a href="#" class="social-icon social-facebook" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
+                        <a href="#" class="social-icon social-twitter" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
+                        <a href="#" class="social-icon social-instagram" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
+                        <a href="#" class="social-icon social-youtube" title="Youtube" target="_blank"><i class="icon-youtube"></i></a>
+                        <a href="#" class="social-icon social-pinterest" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
+                    </div><!-- End .soial-icons -->
+                </div><!-- End .container -->
+            </div><!-- End .footer-bottom -->
+        </footer><!-- End .footer -->
+    </div>
+
+
+
+    <!-- Plugins JS File -->
+    <script src="~/assets/js/jquery.min.js"></script>
+    <script src="~/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/js/jquery.hoverIntent.min.js"></script>
+    <script src="~/assets/js/jquery.waypoints.min.js"></script>
+    <script src="~/assets/js/superfish.min.js"></script>
+    <script src="~/assets/js/owl.carousel.min.js"></script>
+    <script src="~/assets/js/jquery.plugin.min.js"></script>
+    <script src="~/assets/js/jquery.magnific-popup.min.js"></script>
+    <script src="~/assets/js/jquery.countdown.min.js"></script>
+    <!-- Main JS File -->
+    <script src="~/assets/js/main.js"></script>
+    <script src="~/assets/js/demos/demo-2.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const input = document.getElementById('chatbot-input');
+            const sendButton = document.getElementById('chatbot-send');
+            const chatbotBody = document.getElementById('chatbot-body');
+
+            function addMessage(content, isUser) {
+                const messageElement = document.createElement('div');
+                messageElement.className = 'message ' + (isUser ? 'user-message' : 'bot-message');
+                messageElement.textContent = content;
+                chatbotBody.appendChild(messageElement);
+                chatbotBody.scrollTop = chatbotBody.scrollHeight; // Cuộn xuống dưới cùng khi có tin nhắn mới
+            }
+
+            function sendMessage() {
+                const message = input.value.trim();
+                if (message) {
+                    addMessage(message, true); // Thêm tin nhắn của người dùng
+                    input.value = ''; // Xóa ô nhập liệu
+
+                    // Xử lý tin nhắn và gửi phản hồi từ chatbot
+                    // Ở đây bạn có thể gửi yêu cầu AJAX đến máy chủ hoặc sử dụng một giải pháp chatbot khác
+                    setTimeout(function () {
+                        addMessage('Đây là câu trả lời từ chatbot!', false); // Thêm tin nhắn của bot
+                    }, 1000);
+                }
+            }
+
+            sendButton.addEventListener('click', sendMessage);
+            input.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            // Gọi API để lấy số lượng sản phẩm trong giỏ hàng
+            fetch('/Cart/GetCartCount')
+                .then(response => response.json())
+                .then(data => {
+                    document.querySelector('.cart-count').textContent = data;
+                })
+                .catch(error => console.error('Error fetching cart count:', error));
+        });
+        $(document).ready(function () {s
+            var alertMessage = $('#alert-message');
+            if (alertMessage.length) {
+                // Hiển thị thông báo trong 3 giây (3000 milliseconds) rồi ẩn đi
+                setTimeout(function () {
+                    alertMessage.fadeOut('slow');
+                }, 2000);
+            }
+        }); 
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchInput = document.getElementById('searchInput');
+            const suggestionsDropdown = document.getElementById('suggestions');
+            const searchButton = document.getElementById('searchButton');
+
+            searchInput.addEventListener('input', function () {
+                const query = searchInput.value;
+
+                if (query.length >= 1 && query.length <= 2) {
+                    fetch(`/Product/SearchSuggestions?q=${query}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            suggestionsDropdown.innerHTML = '';
+                            if (data.length > 0) {
+                                suggestionsDropdown.style.display = 'block';
+                                data.forEach(product => {
+                                    const suggestion = document.createElement('div');
+                                    suggestion.textContent = product.productName;
+                                    suggestion.onclick = function () {
+                                        searchInput.value = product.productName;
+                                        suggestionsDropdown.style.display = 'none';
+                                        searchForm.submit();
+                                    };
+                                    suggestionsDropdown.appendChild(suggestion);
+                                });
+                            } else {
+                                suggestionsDropdown.style.display = 'none';
+                            }
+                        });
+                } else {
+                    suggestionsDropdown.style.display = 'none';
+                }
+            });
+
+            searchButton.addEventListener('click', function () {
+                searchForm.submit();
+            });
+
+            // Ẩn dropdown khi nhấn ra ngoài
+            document.addEventListener('click', function (event) {
+                if (!suggestionsDropdown.contains(event.target) && event.target !== searchInput) {
+                    suggestionsDropdown.style.display = 'none';
+                }
+            });
+        });
+
+    </script> 
+</body>
+
+
+<!-- molla/index-1.html  22 Nov 2019 09:55:32 GMT -->
+</html>

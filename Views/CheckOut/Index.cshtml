@@ -1,0 +1,108 @@
+﻿@model DAShopTech.Models.OrderViewModel
+
+<main class="main">
+    <nav aria-label="breadcrumb" class="breadcrumb-nav">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+            </ol>
+        </div>
+    </nav>
+
+    <div class="page-content">
+        <div class="checkout">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <form method="post" action="@Url.Action("ConfirmOrder", "CheckOut")">
+                            <div class="form-group">
+                                <label for="customerName">Họ tên</label>
+                                <input type="text" id="customerName" name="customerName" class="form-control" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="phoneNumber">Số điện thoại</label>
+                                <input type="text" id="phoneNumber" name="phoneNumber" class="form-control" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="shippingAddress">Địa chỉ giao hàng</label>
+                                <input type="text" id="shippingAddress" name="shippingAddress" class="form-control" required />
+                            </div>
+
+                            <!-- Phương thức thanh toán -->
+                            <section class="payment-method">
+                                <h2 class="section-title">Phương Thức Thanh Toán</h2>
+                                <div class="form-group">
+                                    <label for="paymentMethod">Chọn phương thức thanh toán</label>
+                                    <select class="form-control" id="paymentMethod" name="paymentMethod" required onchange="togglePaymentMethod()">
+                                        <option value="credit_card">Thẻ tín dụng</option>
+                                        <option value="bank_transfer">Chuyển khoản ngân hàng</option>
+                                        <option value="cash_on_delivery">Thanh toán khi nhận hàng</option>
+                                    </select>
+                                </div>
+
+                                <!-- Trường nhập email, chỉ hiện khi chọn thanh toán khi nhận hàng -->
+                                <div class="form-group" id="emailField" style="display:none;">
+                                    <label for="email">Email (yêu cầu để xác nhận đơn hàng)</label>
+                                    <input type="email" class="form-control" id="email" name="email" required />
+                                </div>
+
+                                <!-- Mã QR, chỉ hiển thị khi chọn chuyển khoản ngân hàng -->
+                                <div id="qrCodeContainer" style="display:none;">
+                                    <h3>Chuyển khoản ngân hàng</h3>
+                                    <p>Vui lòng quét mã QR dưới đây để thực hiện chuyển khoản:</p>
+                                    <img id="qrCode" src="" alt="QR Code" />
+                                </div>
+                            </section>
+
+                            <h3 class="summary-title">Tóm tắt đơn hàng</h3>
+                            <table class="table table-summary">
+                                <tbody>
+                                    @foreach (var item in Model.CartItems)
+                                    {
+                                        <tr>
+                                            <td>@item.Product.ProductName</td>
+                                            <td>@item.Quantity x @item.Product.Price.ToString("C", new System.Globalization.CultureInfo("vi-VN"))</td>
+                                            <td class="text-right">@((item.Quantity * item.Product.Price).ToString("C", new System.Globalization.CultureInfo("vi-VN")))</td>
+                                        </tr>
+                                    }
+                                    <tr>
+                                        <td>Tổng cộng</td>
+                                        <td class="text-right">
+                                            @Model.TotalAmount.ToString("C", new System.Globalization.CultureInfo("vi-VN"))
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <button type="submit" class="btn btn-primary btn-block">Xác nhận đơn hàng</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+@section Scripts {
+    <script type="text/javascript">
+        function togglePaymentMethod() {
+            var paymentMethod = document.getElementById("paymentMethod").value;
+            var emailField = document.getElementById("emailField");
+            var qrCodeContainer = document.getElementById("qrCodeContainer");
+
+            if (paymentMethod === "cash_on_delivery") {
+                emailField.style.display = "block";
+                qrCodeContainer.style.display = "none";
+            } else if (paymentMethod === "bank_transfer") {
+                emailField.style.display = "none";
+                qrCodeContainer.style.display = "block";
+                // Thay đổi src của mã QR khi chọn phương thức chuyển khoản ngân hàng
+                document.getElementById("qrCode").src = "/assets/images/qrcode.jpg"; // Thay đổi đường dẫn này theo nhu cầu của bạn
+            } else {
+                emailField.style.display = "none";
+                qrCodeContainer.style.display = "none";
+            }
+        }
+    </script>
+}

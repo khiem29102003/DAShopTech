@@ -1,0 +1,64 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-wrapper">
+    <!-- Danh Sách Sản Phẩm Kho -->
+    <div class="card">
+        <h5 class="card-header">
+            Sản Phẩm Kho
+            <a href="@Url.Action("CreateProduct", "Admin")">
+                <button type="button" class="btn rounded-pill btn-info">Thêm Sản Phẩm</button>
+            </a>
+        </h5>
+        <div class="table-responsive text-nowrap">
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["SuccessMessage"]
+                </div>
+            }
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID Sản Phẩm</th>
+                        <th>Tên Sản Phẩm</th>
+                        <th>Hình ảnh</th>
+                        <th>Loại Sản Phẩm</th>
+                        <th>Hãng SX</th>
+                        <th>Ngày Nhập</th>
+                        <th>Số Lượng Tồn</th>
+                        <th>Nhà Cung Cấp</th>
+                        <th>Trạng Thái</th>
+                    </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                    @foreach (var product in Model)
+                    {
+                        <tr onclick="location.href='@Url.Action("EditProduct", "Admin", new { id = product.ProductId })'" style="cursor: pointer;">
+                            <td>@product.ProductId</td>
+                            <td>@product.ProductName</td>
+                            <td>
+                                <img src="@product.ImageUrl" alt="@product.ProductName" style="width: 100px; height: auto;" />
+                            </td>
+                            <td>@product.CategoryName</td>
+                            <td>@product.Manufacturer</td>
+                            <td>@product.CreatedDate</td>
+                            <td>@product.Quantity</td>
+                            <td>@product.Supplier</td>
+                            <td>
+                                <span class="badge bg-label-@(product.Status == "Hoạt Động" ? "success" : "warning") me-1">@product.Status</span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Danh Sách Sản Phẩm Kho -->
+
+    <div class="content-backdrop fade"></div>
+</div>

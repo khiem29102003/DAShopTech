@@ -1,0 +1,22 @@
+﻿@model DAShopTech.Models.User
+
+@{
+    ViewData["Title"] = "Xác Nhận Xóa Tài Khoản";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-wrapper">
+    <div class="card">
+        <h5 class="card-header">Xác Nhận Xóa Tài Khoản</h5>
+        <div class="card-body">
+            <p>Bạn có chắc chắn muốn xóa tài khoản này không?</p>
+            <p><strong>ID:</strong> @Model.UserId</p>
+            <p><strong>Tên Tài Khoản:</strong> @Model.Username</p>
+            <form asp-action="DeleteAccount" method="post">
+                <input type="hidden" name="id" value="@Model.UserId" />
+                <button type="submit" class="btn btn-danger">Xóa</button>
+                <a href="@Url.Action("Accounts", "Admin")" class="btn btn-secondary">Hủy</a>
+            </form>
+        </div>
+    </div>
+</div>

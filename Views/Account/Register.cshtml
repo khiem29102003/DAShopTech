@@ -1,0 +1,75 @@
+﻿@model RegisterViewModel
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.Message
+    </div>
+}
+
+    <div class="container">
+        <div class="form-box">
+            <div class="form-tab">
+                <ul class="nav nav-pills nav-fill" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link" id="signin-tab-2" data-toggle="tab" href="#signin-2" role="tab" aria-controls="signin-2" aria-selected="false">ĐĂNG Ký</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+          
+
+                <form asp-action="Register" asp-controller="Account" method="post">
+                    <div class="form-group">
+                        <label for="register-username">Tên đăng nhập</label>
+                        <input type="text" class="form-control" id="register-username" name="Username" required>
+                    </div><!-- End .form-group -->
+
+                    <div class="form-group">
+                        <label for="register-email">Địa chỉ Email</label>
+                        <input type="email" class="form-control" id="register-email" name="Email" required>
+                    </div><!-- End .form-group -->
+
+                    <div class="form-group">
+                        <label for="register-password">Mật khẩu</label>
+                        <input type="password" class="form-control" id="register-password" name="Password" required>
+                    </div><!-- End .form-group -->
+
+                    <div class="form-group">
+                        <label for="register-confirm-password">Nhập lại mật khẩu</label>
+                        <input type="password" class="form-control" id="register-confirm-password" name="ConfirmPassword" required>
+                    </div><!-- End .form-group -->
+
+                    
+                    <div class="form-footer">
+                        <button type="submit" class="btn btn-outline-primary-2">
+                            <span>ĐĂNG KÝ</span>
+                            <i class="icon-long-arrow-right"></i>
+                        </button>
+
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="register-policy" required>
+                            <label class="custom-control-label" for="register-policy">Tôi đồng ý với <a href="#">chính sách quyền riêng tư</a> *</label>
+                        </div>
+                    </div><!-- End .form-footer -->
+                </form>
+                <div class="form-choice">
+                        <p class="text-center">Đăng nhập bằng</p>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <a href="#" class="btn btn-login btn-g">
+                                    <i class="icon-google"></i>
+                                    Login With Google
+                                </a>
+                            </div><!-- End .col-6 -->
+                            <div class="col-sm-6">
+                                <a href="#" class="btn btn-login btn-f">
+                                    <i class="icon-facebook-f"></i>
+                                    Login With Facebook
+                                </a>
+                            </div><!-- End .col-6 -->
+                        </div><!-- End .row -->
+                    </div><!-- End .form-choice -->
+                </div><!-- End .tab-content -->
+            </div><!-- End .form-tab -->
+        </div><!-- End .form-box -->
+    </div><!-- End .container -->
+</main><!-- End .main -->

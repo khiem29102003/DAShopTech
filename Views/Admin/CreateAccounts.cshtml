@@ -1,0 +1,65 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}   <!-- Content wrapper -->
+<div class="content-wrapper">
+    <!-- Content -->
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="nav-align-top">
+                    <ul class="nav nav-pills flex-column flex-md-row mb-6">
+                        <li class="nav-item">
+                            <a class="nav-link" href="ChiTietSanPham.html"><i class="bx bx-sm bx-detail me-1_5"></i> Đăng Ký Tài Khoản Mới</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card mb-6">
+                    <!-- Account -->
+                    <div class="card-body">
+                    </div>
+                    <div class="card-body pt-4">
+                        <form id="formAccountSettings" method="POST" asp-action="CreateAccounts">
+                            <div class="row g-6">
+                                <div class="col-md-6">
+                                    <label for="username" class="form-label">Tên Đăng Nhập</label>
+                                    <input class="form-control" type="text" name="Username" id="username" required />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="password" class="form-label">Mật Khẩu</label>
+                                    <input class="form-control" type="password" name="Password" id="password" required />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input class="form-control" type="email" name="Email" id="email" required />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="userType" class="form-label">Loại Tài Khoản</label>
+                                    <select name="UserType" class="form-control" id="userType">
+                                        <option value="Admin">Quản Trị</option>
+                                        <option value="Customer">Khách Hàng</option>
+                                        <option value="Staff">Nhân Viên</option>
+                                    </select>
+                                </div>
+                                @*     <div class="col-md-6">
+                                <label for="accountStatus" class="form-label">Trạng Thái Tài Khoản</label>
+                                <select name="AccountStatusId" class="form-control" id="accountStatus">
+                                <option value="1">Hoạt Động</option>
+                                <option value="2">Đã Khóa</option>
+                                </select>
+                                </div> *@
+                            </div>
+                            <div class="mt-6">
+                                <button type="submit" class="btn btn-primary me-3">Thêm Tài Khoản</button>
+                                <button type="reset" class="btn btn-outline-secondary">Trở Về</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /Account -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / Content -->
+    <div class="content-backdrop fade"></div>
+</div>
+<!-- Content wrapper -->

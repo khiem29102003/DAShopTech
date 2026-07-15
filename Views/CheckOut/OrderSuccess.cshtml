@@ -1,0 +1,39 @@
+﻿@model DAShopTech.Models.Order
+
+@{
+    ViewData["Title"] = "Order Success";
+}
+<style>
+    .success-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
+    .success-icon {
+        width: 160px;
+        height: 160px;
+        margin-bottom: 20px;
+    }
+
+    .order-info {
+        margin-top: 20px;
+        text-align: center;
+    }
+</style>
+<div class="container success-container">
+    <div class="success-icon">
+        <img src="~/assets/images/icons8-success-240.png" alt="Success Icon" class="img-fluid">
+    </div>
+    <div class="order-info">
+        <h2>Đặt hàng thành công !</h2>
+        <p>Mã đơn hàng: <strong>@Model.OrderId</strong></p>
+        <p>Ngày đặt hàng: <strong>@DateTime.Now.ToString("dd/MM/yyyy HH:mm")</strong></p>
+        <p>Ngày giao dự kiến: <strong>@DateTime.Now.AddDays(new Random().Next(2, 5)).ToString("dd/MM/yyyy")</strong></p>
+        <p>Tổng giá trị đơn hàng: <strong>@Model.TotalAmount.ToString("C", new System.Globalization.CultureInfo("vi-VN"))</strong></p>
+        <p>Tên người đặt: <strong>@Model.Customer.FullName</strong></p>
+        <a href="/" class="btn btn-primary mt-4">Trở về trang chủ</a>
+    </div>
+</div> 

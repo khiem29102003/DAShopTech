@@ -1,0 +1,107 @@
+﻿@model IEnumerable<DAShopTech.Models.Product>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-wrapper">
+    <!-- Danh Sách Sản Phẩm -->
+    <div class="card">
+        <h5 class="card-header">
+            Danh Sách Sản Phẩm
+            <a href="@Url.Action("CreateProduct", "Admin")">
+                <button type="button" class="btn rounded-pill btn-info">Thêm Sản Phẩm</button>
+            </a>
+            <button type="button" class="btn rounded-pill btn-primary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+                Thêm Loại Sản Phẩm Mới
+            </button>
+        </h5>
+
+        <div class="table-responsive text-nowrap">
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["SuccessMessage"]
+                </div>
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["ErrorMessage"]
+                </div>
+            }
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Tên Sản Phẩm</th>
+                        <th>Loại Sản Phẩm</th>
+                        <th>Hãng SX</th>
+                        <th>Hình Ảnh</th>
+                        <th>Trạng Thái</th>
+                        <th>Số Tiền Nhập</th>
+                        <th>Số Tiền Bán Ra</th>
+                        <th>Số Lượng</th>
+                        <th>Người Nhập</th>
+                        <th>Thao Tác</th> <!-- Cột Thao Tác -->
+                    </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                    @foreach (var product in Model)
+                    {
+                        <tr onclick="location.href='@Url.Action("EditProduct", "Admin", new { id = product.ProductId })'" style="cursor: pointer;">
+                            <td>@product.ProductName</td>
+                            <td>@product.Category?.CategoryName</td>
+                            <td>@product.Manufacturer</td>
+                            <td>
+                                <img src="@product.ImageUrl" alt="@product.ProductName" style="width: 100px; height: auto;" />
+                            </td>
+                            <td>
+                                <span class="badge bg-label-@((product.Status == "1") ? "success" : "warning") me-1">
+                                    @(product.Status == "1" ? "Hoạt Động" : "Ngừng Hoạt Động")
+                                </span>
+                            </td>
+                            <td>@product.PurchasePrice</td>
+                            <td>@product.Price</td>
+                            <td>@product.Quantity</td>
+                            <td>@product.EnteredBy</td>
+                            <td>
+                                <form asp-action="DeleteProduct" method="post" style="display:inline;">
+                                    @Html.AntiForgeryToken()
+                                    @Html.Hidden("productId", product.ProductId)
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?')">Xóa</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Danh Sách Sản Phẩm -->
+    <!-- Modal Thêm Loại Sản Phẩm -->
+    <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addCategoryModalLabel">Thêm Loại Sản Phẩm Mới</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form asp-action="AddCategory" method="post">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="categoryName" class="form-label">Tên Loại Sản Phẩm</label>
+                            <input type="text" id="categoryName" name="CategoryName" class="form-control" required />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Lưu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-backdrop fade"></div>
+</div>

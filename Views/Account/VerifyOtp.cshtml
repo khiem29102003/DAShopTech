@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Xác Thực OTP";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.Error
+    </div>
+}
+
+<form asp-action="VerifyOtp" asp-controller="Account" method="post">
+    <div class="form-group">
+        <label for="otp">Mã OTP</label>
+        <input type="text" class="form-control" id="otp" name="otp" required>
+    </div><!-- End .form-group -->
+
+    <div class="form-footer">
+        <button type="submit" class="btn btn-outline-primary-2">
+            <span>Xác Thực</span>
+            <i class="icon-long-arrow-right"></i>
+        </button>
+    </div><!-- End .form-footer -->
+</form>

@@ -1,0 +1,68 @@
+﻿@model DAShopTech.Models.AccountDetailViewModel
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-wrapper">
+    <div class="card">
+        <h5 class="card-header">Chi Tiết Tài Khoản</h5>
+        <div class="card-body">
+            <!-- Thông tin tài khoản -->
+            <h6>Tài Khoản</h6>
+            <p><strong>ID:</strong> @Model.User.UserId</p>
+            <p><strong>Tên:</strong> @Model.User.Username</p>
+            <p><strong>Email:</strong> @Model.User.Email</p>
+            <p><strong>Số Điện Thoại:</strong> @Model.User.PhoneNumber</p>
+
+            <!-- Thông tin khách hàng (nếu có) -->
+            @if (Model.User.Customers.Any())
+            {
+                var customer = Model.User.Customers.FirstOrDefault();
+                <h6>Thông Tin Khách Hàng</h6>
+                <p><strong>Họ Tên:</strong> @customer.FullName</p>
+                <p><strong>Địa Chỉ:</strong> @customer.Address</p>
+                <p><strong>Số Điện Thoại:</strong> @customer.Phone</p>
+                <p><strong>Ngày Đăng Ký:</strong> @customer.RegistrationDate.ToShortDateString()</p>
+                <p><strong>Tổng Chi Tiêu:</strong> @customer.TotalSpent</p>
+            }
+
+            <!-- Danh sách đơn hàng -->
+            @if (Model.Orders.Any())
+            {
+                <h6>Danh Sách Đơn Hàng</h6>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID Đơn Hàng</th>
+                            <th>Ngày Đặt</th>
+                            <th>Tổng Số Tiền</th>
+                            <th>Trạng Thái</th>
+                            <th>Địa Chỉ Giao Hàng</th>
+                            <th>Chi Tiết</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var order in Model.Orders)
+                        {
+                            <tr>
+                                <td>@order.OrderId</td>
+                                <td>@order.OrderDate.ToShortDateString()</td>
+                                <td>@order.TotalAmount</td>
+                                <td>@order.Status</td>
+                                <td>@order.ShippingAddress</td>
+                                <td>
+                                    <a href="@Url.Action("OrderDetail", "Admin", new { id = order.OrderId })" class="btn btn-info">Xem Chi Tiết</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>Không có đơn hàng nào.</p>
+            }
+        </div>
+    </div>
+</div>

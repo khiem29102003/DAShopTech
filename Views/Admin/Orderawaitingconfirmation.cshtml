@@ -1,0 +1,64 @@
+﻿@model IEnumerable<DAShopTech.Models.Order>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-wrapper">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+
+    <div class="card">
+        <h5 class="card-header">Danh Sách Đơn Hàng Chờ Xác Nhận</h5>
+        <div class="table-responsive text-nowrap">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID Đơn Hàng</th>
+                        <th>Ngày Lên Đơn</th>
+                        <th>Tên Khách Hàng</th>
+                        <th>Giá Trị Đơn Hàng</th>
+                        <th>Trạng Thái</th>
+                        <th>Hành Động</th>
+                    </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                    @foreach (var order in Model)
+                    {
+                        <tr>
+                            <td>@order.OrderId</td>
+                            <td>@order.OrderDate.ToString("dd/MM/yyyy")</td>
+                            <td>@order.Customer.FullName</td>
+                            <td>@order.TotalAmount.ToString("C")</td>
+                            <td><span class="badge bg-label-warning me-1">@order.Status</span></td>
+                            <td>
+                                <a href="@Url.Action("OrderDetails", new { id = order.OrderId })" class="btn btn-info">Xem Chi Tiết</a>
+
+                                <form asp-action="ConfirmOrder" method="post" style="display:inline;">
+                                    <input type="hidden" name="id" value="@order.OrderId" />
+                                    <button type="submit" class="btn btn-success">Xác Nhận</button>
+                                </form>
+                                <form asp-action="CancelOrder" method="post" style="display:inline;">
+                                    <input type="hidden" name="id" value="@order.OrderId" />
+                                    <button type="submit" class="btn btn-danger">Hủy</button>
+                                </form>
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

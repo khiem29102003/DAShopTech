@@ -1,0 +1,6 @@
+﻿@model DAShopTech.Models.Order
+
+<h2>Xác nhận đơn hàng thành công</h2>
+<p>Cảm ơn bạn đã xác nhận đơn hàng. Đơn hàng của bạn đang được xử lý.</p>
+<p>Mã đơn hàng: @Model.OrderId</p>
+<p>Tổng tiền: @Model.TotalAmount.ToString("C", new System.Globalization.CultureInfo("vi-VN"))</p>

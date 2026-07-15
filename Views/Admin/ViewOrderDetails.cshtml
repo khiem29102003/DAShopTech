@@ -1,0 +1,47 @@
+﻿@model DAShopTech.Models.Order
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-wrapper">
+    <div class="card">
+        <h5 class="card-header">Chi Tiết Đơn Hàng</h5>
+        <div class="card-body">
+            <h6>Mã Đơn Hàng: @Model.OrderId</h6>
+            <p>Tên Khách Hàng: @Model.Customer.FullName</p>
+            <p>Số Điện Thoại: @Model.Customer.Phone</p>
+            <p>Ngày Đặt Hàng: @Model.OrderDate.ToString("dd/MM/yyyy")</p>
+            <p>Địa Chỉ Giao Hàng: @Model.ShippingAddress</p>
+            <p>Tổng Giá Trị: @Model.TotalAmount.ToString("C", new System.Globalization.CultureInfo("vi-VN"))</p>
+            <p>Trạng Thái: @Model.Status</p>
+
+            <h5>Chi Tiết Sản Phẩm</h5>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Mã Sản Phẩm</th>
+                        <th>Tên Sản Phẩm</th>
+                        <th>Số Lượng</th>
+                        <th>Đơn Giá</th>
+                        <th>Thành Tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.OrderDetails)
+                    {
+                        <tr>
+                            <td>@item.Product.ProductId</td>
+                            <td>@item.Product.ProductName</td>
+                            <td>@item.Quantity</td>
+                            <td>@item.UnitPrice.ToString("C", new System.Globalization.CultureInfo("vi-VN"))</td>
+                            <td>@(item.Quantity * item.UnitPrice).ToString("C", new System.Globalization.CultureInfo("vi-VN"))</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <a href="@Url.Action("OrderAwaitingConfirmation", "Order")" class="btn btn-primary">Trở về danh sách đơn hàng</a>
+        </div>
+    </div>
+    <div class="content-backdrop fade"></div>
+</div>

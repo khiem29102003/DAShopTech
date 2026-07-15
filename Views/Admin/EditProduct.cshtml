@@ -1,0 +1,109 @@
+﻿@model DAShopTech.ViewModels.EditProductViewModel
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-wrapper">
+    <div class="card">
+        <h5 class="card-header">Chỉnh Sửa Sản Phẩm</h5>
+        <div class="card-body">
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["SuccessMessage"]
+                </div>
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["ErrorMessage"]
+                </div>
+            }
+
+            <!-- Form chỉnh sửa sản phẩm -->
+            @using (Html.BeginForm("EditProduct", "Admin", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <!-- Product Name -->
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Product.ProductName, htmlAttributes: new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Product.ProductName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Product.ProductName, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Category -->
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Product.CategoryId, htmlAttributes: new { @class = "form-label" })
+                    @Html.DropDownListFor(model => model.Product.CategoryId, Model.Categories, "Chọn loại sản phẩm", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Product.CategoryId, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Status -->
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Product.Status, htmlAttributes: new { @class = "form-label" })
+                    @Html.DropDownListFor(model => model.Product.Status, new SelectList(new[]
+                             {
+                new { Value = "1", Text = "Hoạt Động" },
+                new { Value = "2", Text = "Ngừng Hoạt Động" }
+                }, "Value", "Text"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Product.Status, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Manufacturer -->
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Product.Manufacturer, htmlAttributes: new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Product.Manufacturer, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Product.Manufacturer, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Image URL -->
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Product.ImageUrl, htmlAttributes: new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Product.ImageUrl, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Product.ImageUrl, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Purchase Price -->
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Product.PurchasePrice, htmlAttributes: new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Product.PurchasePrice, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Product.PurchasePrice, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Price -->
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Product.Price, htmlAttributes: new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Product.Price, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Product.Price, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Quantity -->
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Product.Quantity, htmlAttributes: new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Product.Quantity, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Product.Quantity, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Entered By -->
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Product.EnteredBy, htmlAttributes: new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Product.EnteredBy, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Product.EnteredBy, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Hidden ProductId -->
+                @Html.HiddenFor(model => model.Product.ProductId)
+
+                <!-- Submit Buttons -->
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">Lưu</button>
+                </div>
+            } 
+
+
+            <a asp-action="ProductList" class="btn btn-secondary">Quay lại</a>
+        </div>
+    </div>
+</div>

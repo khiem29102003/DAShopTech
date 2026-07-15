@@ -1,0 +1,593 @@
+﻿ @model List<Product>
+<!-- HOME -->
+<main class="main">
+    <div class="intro-slider-container">
+        <!--Carousel -->
+        <div class="owl-carousel owl-simple owl-light owl-nav-inside" data-toggle="owl" data-owl-options='{"nav": false}'>
+            <div class="intro-slide" style="background-image: url(https://vn.store.asus.com/media/wysiwyg/education/mua-laptop-asus-khuyen-mai-hoc-sinh-sinh-vien-giao-vien-back-to-school-2024-dt.png);">
+                
+            </div><!-- End .intro-slide --> 
+        </div>
+        <!--Carousel -->
+    </div>
+
+    @{
+        // Hàm để lọc các sản phẩm có CategoryId = 1
+        IEnumerable<DAShopTech.Models.Product> GetProductsByCategoryId(IEnumerable<DAShopTech.Models.Product> products, int categoryId)
+        {
+            return products.Where(p => p.CategoryId == categoryId).Take(10);
+        }
+        // Hàm để định dạng giá thành VND với đơn vị chục ngàn
+        string FormatPrice(decimal price)
+        {
+            // Chuyển đổi giá thành dạng chuỗi với dấu phân cách nghìn
+            return string.Format("{0:N0} $", price);
+        }
+    }
+    <!-- Phần còn lại của mã view -->
+    <!--Lựa chọn loại sản phẩm -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6 col-lg-3">
+                <div class="icon-box icon-box-side">
+                    <span class="icon-box-icon text-dark">
+                        <i class="icon-rocket"></i>
+                    </span>
+                    <div class="icon-box-content">
+                        <h3 class="icon-box-title">VẬN CHUYỂN SIÊU TỐC</h3><!-- End .icon-box-title -->
+                        <p>VẬN CHUYỂN SIÊU TÓC TRÊN TOÀN QUỐC</p>
+                    </div><!-- End .icon-box-content -->
+                </div><!-- End .icon-box -->
+            </div><!-- End .col-sm-6 col-lg-3 -->
+
+            <div class="col-sm-6 col-lg-3">
+                <div class="icon-box icon-box-side">
+                    <span class="icon-box-icon text-dark">
+                        <i class="icon-rotate-left"></i>
+                    </span>
+
+                    <div class="icon-box-content">
+                        <h3 class="icon-box-title">MIỄN PHÍ HOÀN TRẢ</h3><!-- End .icon-box-title -->
+                        <p>HỖ TRỢ HOÀN TRẢ TRONG 30 NGÀY</p>
+                    </div><!-- End .icon-box-content -->
+                </div><!-- End .icon-box -->
+            </div><!-- End .col-sm-6 col-lg-3 -->
+
+            <div class="col-sm-6 col-lg-3">
+                <div class="icon-box icon-box-side">
+                    <span class="icon-box-icon text-dark">
+                        <i class="icon-info-circle"></i>
+                    </span>
+
+                    <div class="icon-box-content">
+                        <h3 class="icon-box-title">GIẢM GIÁ HÓA ĐƠN 10%</h3><!-- End .icon-box-title -->
+                        <p>ÁP DỤNG KHI ĐÂNG KÝ THÀNH VIÊN</p>
+                    </div><!-- End .icon-box-content -->
+                </div><!-- End .icon-box -->
+            </div><!-- End .col-sm-6 col-lg-3 -->
+
+            <div class="col-sm-6 col-lg-3">
+                <div class="icon-box icon-box-side">
+                    <span class="icon-box-icon text-dark">
+                        <i class="icon-life-ring"></i>
+                    </span>
+
+                    <div class="icon-box-content">
+                        <h3 class="icon-box-title">DỊCH VỤ HỖ TRỢ</h3><!-- End .icon-box-title -->
+                        <p>HỖ TRỢ KHÁCH HÀNG 24/7</p>
+                    </div><!-- End .icon-box-content -->
+                </div><!-- End .icon-box -->
+            </div><!-- End .col-sm-6 col-lg-3 -->
+        </div>
+              <!-- Tủ Lạnh-->
+        <div class="container">
+            <ul class="nav nav-pills nav-border-anim nav-big justify-content-center mb-3" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="products-featured-link" data-toggle="tab" href="#products-featured-tab" role="tab" aria-controls="products-featured-tab" aria-selected="true">TV</a>
+                </li
+            </ul>
+        </div>
+        <div class="tab-content tab-content-carousel">
+            <div class="tab-pane p-0 fade show active" id="products-featured-tab" role="tabpanel" aria-labelledby="products-featured-link">
+                <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
+                     data-owl-options='{
+                                "nav": false,
+                                "dots": true,
+                                "margin": 20,
+                                "loop": false,
+                                "responsive": {
+                                    "0": {
+                                        "items":2
+                                    },
+                                    "480": {
+                                        "items":2
+                                    },
+                                    "768": {
+                                        "items":3
+                                    },
+                                    "992": {
+                                        "items":4
+                                    },
+                                    "1200": {
+                                        "items":5
+                                    },
+                                    "1600": {
+                                        "items":6,
+                                        "nav": true
+                                    }
+                                }
+                            }'>
+                    @if (Model != null && Model.Any())
+                    {
+                        var filteredProducts = GetProductsByCategoryId(Model, 7);
+
+                        @foreach (var product in filteredProducts)
+                        {
+                            <div class="product product-11 text-center">
+                                <figure class="product-media">
+                                    <!-- Hình ảnh sản phẩm -->
+                                    <a asp-controller="Shop" asp-action="ProductDetail" asp-route-id="@product.ProductId" class="btn btn-sm text-dark p-0">
+                                        <img src="@product.ImageUrl" alt="Product image" class="product-image">
+                                    </a>
+
+                                    <!-- Hành động thêm vào danh sách yêu thích -->
+                                    <div class="product-action-vertical">
+                                        <a href="#" class="btn-product-icon btn-wishlist"><span>Add to wishlist</span></a>
+                                    </div><!-- End .product-action-vertical -->
+                                </figure><!-- End .product-media -->
+
+                                <div class="product-body">
+                                    <!-- Tiêu đề sản phẩm -->
+                                    <h3 class="product-title">
+                                        <a asp-controller="Shop" asp-action="ProductDetail" asp-route-id="@product.ProductId">@product.ProductName</a>
+                                    </h3><!-- End .product-title -->
+                                    <!-- Giá sản phẩm -->
+                                    <div class="product-price">
+                                        @string.Format("{0:N0} $", product.Price)
+                                    </div><!-- End .product-price -->
+                                    <!-- Form thêm sản phẩm vào giỏ hàng -->
+                                    <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                                        <input type="hidden" name="id" value="@product.ProductId" />
+                                        <button type="submit" class="btn-product btn-cart">
+                                            <span>THÊM VÀO GIỎ HÀNG</span>
+                                        </button>
+                                    </form>
+                                </div><!-- End .product-body -->
+                                @* <div class="product-action">
+                        <!-- Form thêm sản phẩm vào giỏ hàng -->
+                        <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                        <input type="hidden" name="id" value="@product.ProductId" />
+                        <button type="submit" class="btn-product btn-cart">
+                        <span>THÊM VÀO GIỎ HÀNG</span>
+                        </button>
+                        </form>
+                        </div><!-- End .product-action --> *@
+                            </div>
+                        }
+
+
+                    }
+                    else
+                    {
+                        <p>No products available for CategoryId 1.</p>
+                    }
+                </div><!-- End .owl-carousel -->
+            </div><!-- .End .tab-pane -->
+        </div><!-- End .tab-content -->
+        <!-- Tủ Lạnh-->
+         <!-- Tủ Lạnh-->
+        <div class="container">
+            <ul class="nav nav-pills nav-border-anim nav-big justify-content-center mb-3" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="products-featured-link" data-toggle="tab" href="#products-featured-tab" role="tab" aria-controls="products-featured-tab" aria-selected="true">TỦ LẠNH</a>
+                </li
+            </ul>
+        </div>
+        <div class="tab-content tab-content-carousel">
+            <div class="tab-pane p-0 fade show active" id="products-featured-tab" role="tabpanel" aria-labelledby="products-featured-link">
+                <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
+                     data-owl-options='{
+                                "nav": false,
+                                "dots": true,
+                                "margin": 20,
+                                "loop": false,
+                                "responsive": {
+                                    "0": {
+                                        "items":2
+                                    },
+                                    "480": {
+                                        "items":2
+                                    },
+                                    "768": {
+                                        "items":3
+                                    },
+                                    "992": {
+                                        "items":4
+                                    },
+                                    "1200": {
+                                        "items":5
+                                    },
+                                    "1600": {
+                                        "items":6,
+                                        "nav": true
+                                    }
+                                }
+                            }'>
+                    @if (Model != null && Model.Any())
+                    {
+                        var filteredProducts = GetProductsByCategoryId(Model, 12);
+
+                        @foreach (var product in filteredProducts)
+                        {
+                            <div class="product product-11 text-center">
+                                <figure class="product-media">
+                                    <!-- Hình ảnh sản phẩm -->
+                                    <a asp-controller="Shop" asp-action="ProductDetail" asp-route-id="@product.ProductId" class="btn btn-sm text-dark p-0">
+                                        <img src="@product.ImageUrl" alt="Product image" class="product-image">
+                                    </a>
+
+                                    <!-- Hành động thêm vào danh sách yêu thích -->
+                                    <div class="product-action-vertical">
+                                        <a href="#" class="btn-product-icon btn-wishlist"><span>Add to wishlist</span></a>
+                                    </div><!-- End .product-action-vertical -->
+                                </figure><!-- End .product-media -->
+
+                                <div class="product-body">
+                                    <!-- Tiêu đề sản phẩm -->
+                                    <h3 class="product-title">
+                                        <a asp-controller="Shop" asp-action="ProductDetail" asp-route-id="@product.ProductId">@product.ProductName</a>
+                                    </h3><!-- End .product-title -->
+                                    <!-- Giá sản phẩm -->
+                                    <div class="product-price">
+                                        @string.Format("{0:N0} $", product.Price)
+                                    </div><!-- End .product-price -->
+                                    <!-- Form thêm sản phẩm vào giỏ hàng -->
+                                    <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                                        <input type="hidden" name="id" value="@product.ProductId" />
+                                        <button type="submit" class="btn-product btn-cart">
+                                            <span>THÊM VÀO GIỎ HÀNG</span>
+                                        </button>
+                                    </form>
+                                </div><!-- End .product-body -->
+                                @* <div class="product-action">
+                        <!-- Form thêm sản phẩm vào giỏ hàng -->
+                        <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                        <input type="hidden" name="id" value="@product.ProductId" />
+                        <button type="submit" class="btn-product btn-cart">
+                        <span>THÊM VÀO GIỎ HÀNG</span>
+                        </button>
+                        </form>
+                        </div><!-- End .product-action --> *@
+                            </div>
+                        }
+
+
+                    }
+                    else
+                    {
+                        <p>No products available for CategoryId 1.</p>
+                    }
+                </div><!-- End .owl-carousel -->
+            </div><!-- .End .tab-pane -->
+        </div><!-- End .tab-content -->
+        <!-- Tủ Lạnh-->
+        <!-- Máy Lạnh-->
+        <div class="container">
+            <ul class="nav nav-pills nav-border-anim nav-big justify-content-center mb-3" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="products-featured-link" data-toggle="tab" href="#products-featured-tab" role="tab" aria-controls="products-featured-tab" aria-selected="true">MÁY LẠNH</a>
+                </li
+            </ul>
+        </div>
+        <div class="tab-content tab-content-carousel">
+            <div class="tab-pane p-0 fade show active" id="products-featured-tab" role="tabpanel" aria-labelledby="products-featured-link">
+                <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
+                     data-owl-options='{
+                                "nav": false,
+                                "dots": true,
+                                "margin": 20,
+                                "loop": false,
+                                "responsive": {
+                                    "0": {
+                                        "items":2
+                                    },
+                                    "480": {
+                                        "items":2
+                                    },
+                                    "768": {
+                                        "items":3
+                                    },
+                                    "992": {
+                                        "items":4
+                                    },
+                                    "1200": {
+                                        "items":5
+                                    },
+                                    "1600": {
+                                        "items":6,
+                                        "nav": true
+                                    }
+                                }
+                            }'>
+                    @if (Model != null && Model.Any())
+                    {
+                        var filteredProducts = GetProductsByCategoryId(Model, 11);
+
+                        @foreach (var product in filteredProducts)
+                        {
+                            <div class="product product-11 text-center">
+                                <figure class="product-media">
+                                    <!-- Hình ảnh sản phẩm -->
+                                    <a asp-controller="Shop" asp-action="ProductDetail" asp-route-id="@product.ProductId" class="btn btn-sm text-dark p-0">
+                                        <img src="@product.ImageUrl" alt="Product image" class="product-image">
+                                    </a>
+
+                                    <!-- Hành động thêm vào danh sách yêu thích -->
+                                    <div class="product-action-vertical">
+                                        <a href="#" class="btn-product-icon btn-wishlist"><span>Add to wishlist</span></a>
+                                    </div><!-- End .product-action-vertical -->
+                                </figure><!-- End .product-media -->
+
+                                <div class="product-body">
+                                    <!-- Tiêu đề sản phẩm -->
+                                    <h3 class="product-title">
+                                        <a asp-controller="Shop" asp-action="ProductDetail" asp-route-id="@product.ProductId">@product.ProductName</a>
+                                    </h3><!-- End .product-title -->
+                                    <!-- Giá sản phẩm -->
+                                    <div class="product-price">
+                                        @string.Format("{0:N0} $", product.Price)
+                                    </div><!-- End .product-price -->
+                                    <!-- Form thêm sản phẩm vào giỏ hàng -->
+                                    <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                                        <input type="hidden" name="id" value="@product.ProductId" />
+                                        <button type="submit" class="btn-product btn-cart">
+                                            <span>THÊM VÀO GIỎ HÀNG</span>
+                                        </button>
+                                    </form>
+                                </div><!-- End .product-body -->
+                                @* <div class="product-action">
+                        <!-- Form thêm sản phẩm vào giỏ hàng -->
+                        <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                        <input type="hidden" name="id" value="@product.ProductId" />
+                        <button type="submit" class="btn-product btn-cart">
+                        <span>THÊM VÀO GIỎ HÀNG</span>
+                        </button>
+                        </form>
+                        </div><!-- End .product-action --> *@
+                            </div>
+                        }
+
+
+                    }
+                    else
+                    {
+                        <p>No products available for CategoryId 1.</p>
+                    }
+                </div><!-- End .owl-carousel -->
+            </div><!-- .End .tab-pane -->
+        </div><!-- End .tab-content -->
+        <!-- Máy Lạnh-->
+        <!-- LAPTOP-->
+        <div class="container">
+            <ul class="nav nav-pills nav-border-anim nav-big justify-content-center mb-3" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="products-featured-link" data-toggle="tab" href="#products-featured-tab" role="tab" aria-controls="products-featured-tab" aria-selected="true">LAPTOP</a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content tab-content-carousel">
+            <div class="tab-pane p-0 fade show active" id="products-featured-tab" role="tabpanel" aria-labelledby="products-featured-link">
+                <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
+                     data-owl-options='{
+                                "nav": false,
+                                "dots": true,
+                                "margin": 20,
+                                "loop": false,
+                                "responsive": {
+                                    "0": {
+                                        "items":2
+                                    },
+                                    "480": {
+                                        "items":2
+                                    },
+                                    "768": {
+                                        "items":3
+                                    },
+                                    "992": {
+                                        "items":4
+                                    },
+                                    "1200": {
+                                        "items":5
+                                    },
+                                    "1600": {
+                                        "items":6,
+                                        "nav": true
+                                    }
+                                }
+                            }'> 
+                            @if (Model != null && Model.Any())
+                            {
+                                var filteredProducts = GetProductsByCategoryId(Model, 1);
+
+                        @foreach (var product in filteredProducts)
+                        {
+                            <div class="product product-11 text-center">
+                                <figure class="product-media">
+                                    <!-- Hình ảnh sản phẩm -->
+                                    <a asp-controller="Shop" asp-action="ProductDetail" asp-route-id="@product.ProductId" class="btn btn-sm text-dark p-0">
+                                        <img src="@product.ImageUrl" alt="Product image" class="product-image">
+                                    </a>
+
+                                    <!-- Hành động thêm vào danh sách yêu thích -->
+                                    <div class="product-action-vertical">
+                                        <a href="#" class="btn-product-icon btn-wishlist"><span>Add to wishlist</span></a>
+                                    </div><!-- End .product-action-vertical -->
+                                </figure><!-- End .product-media -->
+
+                                <div class="product-body">
+                                    <!-- Tiêu đề sản phẩm -->
+                                    <h3 class="product-title">
+                                        <a asp-controller="Shop" asp-action="ProductDetail" asp-route-id="@product.ProductId">@product.ProductName</a>
+                                    </h3><!-- End .product-title -->
+                                    <!-- Giá sản phẩm -->
+                                    <div class="product-price">
+                                        @string.Format("{0:N0} $", product.Price)
+                                    </div><!-- End .product-price -->
+                                    <!-- Form thêm sản phẩm vào giỏ hàng -->
+                                    <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                                        <input type="hidden" name="id" value="@product.ProductId" />
+                                        <button type="submit" class="btn-product btn-cart">
+                                            <span>THÊM VÀO GIỎ HÀNG</span>
+                                        </button>
+                                    </form>
+                                </div><!-- End .product-body -->
+
+                                @* <div class="product-action">
+                                    <!-- Form thêm sản phẩm vào giỏ hàng -->
+                                    <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                                        <input type="hidden" name="id" value="@product.ProductId" />
+                                        <button type="submit" class="btn-product btn-cart">
+                                            <span>THÊM VÀO GIỎ HÀNG</span>
+                                        </button>
+                                    </form>
+                                </div><!-- End .product-action --> *@
+                            </div>
+                        }
+
+
+                            }
+                            else
+                            {
+                                <p>No products available for CategoryId 1.</p>
+                            }
+                </div><!-- End .owl-carousel -->
+            </div><!-- .End .tab-pane -->
+        </div><!-- End .tab-content -->
+        <!-- LAPTOP-->
+        <!-- ĐIỆN THOẠI-->
+        <div class="container">
+            <ul class="nav nav-pills nav-border-anim nav-big justify-content-center mb-3" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="products-featured-link" data-toggle="tab" href="#products-featured-tab" role="tab" aria-controls="products-featured-tab" aria-selected="true">ĐIỆN THOẠI</a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content tab-content-carousel">
+            <div class="tab-pane p-0 fade show active" id="products-featured-tab" role="tabpanel" aria-labelledby="products-featured-link">
+                <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
+                     data-owl-options='{
+                                "nav": false,
+                                "dots": true,
+                                "margin": 20,
+                                "loop": false,
+                                "responsive": {
+                                    "0": {
+                                        "items":2
+                                    },
+                                    "480": {
+                                        "items":2
+                                    },
+                                    "768": {
+                                        "items":3
+                                    },
+                                    "992": {
+                                        "items":4
+                                    },
+                                    "1200": {
+                                        "items":5
+                                    },
+                                    "1600": {
+                                        "items":6,
+                                        "nav": true
+                                    }
+                                }
+                            }'>
+                    @if (Model != null && Model.Any())
+                    {
+                        var filteredProducts = GetProductsByCategoryId(Model, 2);
+
+                        @foreach (var product in filteredProducts)
+                        {
+                            <div class="product product-11 text-center">
+                                <figure class="product-media">
+                                    <!-- Hình ảnh sản phẩm -->
+                                    <a asp-controller="Shop" asp-action="ProductDetail" asp-route-id="@product.ProductId" class="btn btn-sm text-dark p-0">
+                                        <img src="@product.ImageUrl" alt="Product image" class="product-image">
+                                    </a>
+
+                                    <!-- Hành động thêm vào danh sách yêu thích -->
+                                    <div class="product-action-vertical">
+                                        <a href="#" class="btn-product-icon btn-wishlist"><span>Add to wishlist</span></a>
+                                    </div><!-- End .product-action-vertical -->
+                                </figure><!-- End .product-media -->
+
+                                <div class="product-body">
+                                    <!-- Tiêu đề sản phẩm -->
+                                    <h3 class="product-title">
+                                        <a asp-controller="Shop" asp-action="ProductDetail" asp-route-id="@product.ProductId">@product.ProductName</a>
+                                    </h3><!-- End .product-title -->
+                                    <!-- Giá sản phẩm -->
+                                    <div class="product-price">
+                                        @string.Format("{0:N0} $", product.Price)
+                                    </div><!-- End .product-price -->
+                                    <!-- Form thêm sản phẩm vào giỏ hàng -->
+                                    <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                                        <input type="hidden" name="id" value="@product.ProductId" />
+                                        <button type="submit" class="btn-product btn-cart">
+                                            <span>THÊM VÀO GIỎ HÀNG</span>
+                                        </button>
+                                    </form>
+                                </div><!-- End .product-body -->
+                                @* <div class="product-action">
+                        <!-- Form thêm sản phẩm vào giỏ hàng -->
+                        <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                        <input type="hidden" name="id" value="@product.ProductId" />
+                        <button type="submit" class="btn-product btn-cart">
+                        <span>THÊM VÀO GIỎ HÀNG</span>
+                        </button>
+                        </form>
+                        </div><!-- End .product-action --> *@
+                            </div>
+                        }
+
+
+                    }
+                    else
+                    {
+                        <p>No products available for CategoryId 1.</p>
+                    }
+                </div><!-- End .owl-carousel -->
+            </div><!-- .End .tab-pane -->
+        </div><!-- End .tab-content -->
+        <!-- ĐIỆN THOẠI-->
+    </div>
+    <!--Lựa chọn loại sản phẩm -->
+</main>
+<!-- HOME -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.btn-add-to-cart').click(function (e) {
+            e.preventDefault();
+            var productId = $(this).data('product-id');
+
+            $.ajax({
+                url: '@Url.Action("AddToCart", "Cart")',
+                type: 'POST',
+                data: { id: productId },
+                success: function (response) {
+                    if (response.success) {
+                        alert(response.message);
+                        // Cập nhật số lượng sản phẩm trong giỏ hàng
+                        $('.cart-count').text(response.cartItemCount);
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function () {
+                    alert("There was an error adding the product to the cart.");
+                }
+            });
+        });
+    });
+</script>
